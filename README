@@ -1,0 +1,15 @@
+App
+Calendario.
+
+## RFs (Requisitos funcionais)
+ [] - Deve ser possível cadastrar contato;
+ [] - Deve ser possível Pesquisar por nome ou telefone;
+ [] - Deve ser possível Deletar contatos;
+ [] - Deve ser possível Alterar contatos;
+
+## RNs (Regras de negócio)
+ [] - Deve ser possivel salvar um LOG de contatos excluidos em arquivo de texto;
+ 
+## RNFs (Requisitos não-funcionais)
+ [] - Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
+ [] - Todas listas de dados precisam estar paginadas com 10 itens por página;
