@@ -68,6 +68,17 @@ export class PrismaContactRepository implements ContactRepository {
     return contact
   }
 
+  async findMany() {
+    const contact = await prisma.contact.findMany({
+      where: {
+        validated_at: null,
+      },
+      take: 10,
+      include: { phone: true }
+    })
+    return contact
+  }
+
   async findByName(name: string) {
     const contact = await prisma.contact.findFirst({
       where: {

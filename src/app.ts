@@ -3,8 +3,15 @@ import { ZodError } from 'zod'
 import { env } from './env'
 import { contactRoutes } from './http/contact-controllers/routes'
 import { phoneRoutes } from './http/phone-controllers/routes'
+import { fastifyCors } from '@fastify/cors'
 
 export const app = fastify()
+
+
+// Adicione o plugin fastify-cors ao seu servidor Fastify
+app.register(fastifyCors, {
+  origin: '*', // Permitir requisições de qualquer origem (isso é amplo, considere restringir conforme necessário)
+});
 
 app.register(contactRoutes)
 app.register(phoneRoutes)
