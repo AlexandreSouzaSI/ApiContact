@@ -1,6 +1,7 @@
 import { Phone, Prisma } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import { PhoneRepository } from '../phone-repository'
+import { UserNotExistsError } from '@/use-cases/errors/user-not-exists-error'
 
 export class PrismaPhoneRepository implements PhoneRepository {
   async delete(id: string) {
@@ -14,6 +15,7 @@ export class PrismaPhoneRepository implements PhoneRepository {
   }
 
   async save(data: Phone) {
+    console.log("data no repository: ",data)
     const contact = await prisma.phone.update({
       where: {
         id: data.id,
@@ -25,6 +27,30 @@ export class PrismaPhoneRepository implements PhoneRepository {
   }
 
   async create(data: Prisma.PhoneUncheckedCreateInput) {
+
+    console.log("Repository Data: ",data)
+    
+    const contact = await prisma.contact.findUnique({
+      where: {
+        id: data.contact_Id
+      }
+    })
+
+    if(!contact) {
+      throw new UserNotExistsError()
+    }
+
+    const contactPhone = await prisma.phone.findMany({
+      where: {
+        contact_Id: contact.id
+      }
+    })
+
+    const maxPhonesPerContact = 3; 
+    if (contactPhone.length >= maxPhonesPerContact) {
+      throw new Error('Número máximo de telefones por contato atingido');
+    }
+
     const phone = await prisma.phone.create({
       data,
     })
@@ -32,9 +58,11 @@ export class PrismaPhoneRepository implements PhoneRepository {
     return phone
   }
 
-  async findById(id: string) {
-    const phone = await prisma.phone.findUnique({
-      where: { id },
+  async findById(contact_Id: string) {
+    const phone = await prisma.phone.findMany({
+      where: { 
+        contact_Id
+       },
     })
     return phone
   }

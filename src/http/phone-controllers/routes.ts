@@ -8,7 +8,7 @@ import { updatePhone } from './update-phone'
 export async function phoneRoutes(app: FastifyInstance) {
   app.post('/phone', createPhone)
   app.delete('/phone/:id', deletePhone)
-  app.get('/phone/:id', getPhone)
+  app.get('/phone/:contact_Id', getPhone)
   app.get('/phone/search', searchPhone)
   app.put('/phone/update/:id', updatePhone)
 

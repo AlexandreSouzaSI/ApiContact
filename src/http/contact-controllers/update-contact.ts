@@ -6,14 +6,28 @@ import { z } from 'zod'
 export async function updateContact(request: FastifyRequest, reply: FastifyReply) {
   const updateContactBodySchema = z.object({
       age: z.string(),
-      name: z.string()
+      name: z.string(),
+      phone1: z.object({
+        id: z.string(),
+        number: z.string()
+      }).optional(),
+      phone2: z.object({
+        id: z.string(),
+        number: z.string()
+      }).optional(),
+      phone3: z.object({
+        id: z.string(),
+        number: z.string()
+      }).optional(),
   })
 
   const updateContactParamsSchema = z.object({
     id: z.string(),
 })
 
-  const { age, name } = updateContactBodySchema.parse(request.body)
+console.log("request: ", request.body)
+
+  const { age, name, phone1, phone2, phone3 } = updateContactBodySchema.parse(request.body)
   const { id } = updateContactParamsSchema.parse(request.params)
 
   try {
@@ -22,7 +36,10 @@ export async function updateContact(request: FastifyRequest, reply: FastifyReply
     const { contact } = await updateContactUseCase.execute({
       id,
       age,
-      name
+      name,
+      phone1,
+      phone2,
+      phone3
     })
     return reply.status(200).send({contact})
     

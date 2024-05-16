@@ -5,16 +5,19 @@ import fs from 'fs/promises';
 
 export class PrismaContactRepository implements ContactRepository {
   async delete(id: string) {
-    const transaction = await prisma.$transaction(async (prisma) => {
+
+    
+    const deleteContact = await prisma.$transaction(async (prisma) => {
       const contact = await prisma.contact.findUnique({
         where: { id },
-        include: { phone: true }, // Inclui os telefones associados ao contato
+        include: { phone: true },
       });
-  
+      
       if (!contact) {
         throw new Error(`Contato com ID ${id} não encontrado.`);
       }
-  
+
+      
       const contactInfo = `
         Contato Deletado:
         ID: ${contact.id}
@@ -27,9 +30,14 @@ export class PrismaContactRepository implements ContactRepository {
   
       await fs.writeFile('deleted_contact.txt', contactInfo);
   
-      await prisma.phone.deleteMany({
-        where: { id },
+      const user = await prisma.phone.deleteMany({
+        where: { 
+          contact_Id: id
+         },
       });
+
+      console.log("aqui: ", user)
+
   
       await prisma.contact.delete({
         where: { id },
@@ -38,7 +46,7 @@ export class PrismaContactRepository implements ContactRepository {
       return contact;
     });
   
-    return transaction;
+    return deleteContact;
   }
 
   async save(data: Contact) {
@@ -68,15 +76,36 @@ export class PrismaContactRepository implements ContactRepository {
     return contact
   }
 
-  async findMany() {
+  async findMany(query?: string, page?: string) {
     const contact = await prisma.contact.findMany({
       where: {
         validated_at: null,
+        OR: [
+          {
+            name: {
+              contains: query || '', // Verifica se o nome contém o termo de pesquisa
+            },
+          },
+          {
+            phone: {
+              some: {
+                number: {
+                  contains: query || '', // Verifica se algum número de telefone contém o termo de pesquisa
+                },
+              },
+            },
+          },
+        ],
       },
-      take: 10,
-      include: { phone: true }
-    })
-    return contact
+      take: 10, // Limite de resultados por página
+      skip: page ? (parseInt(page) - 1) * 10 : 0, // Pular resultados se a página não for a primeira
+      include: {
+        phone: true, // Inclui os números de telefone associados aos contatos
+      },
+    });
+    return {
+      contact
+    }
   }
 
   async findByName(name: string) {

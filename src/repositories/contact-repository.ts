@@ -7,5 +7,5 @@ export interface ContactRepository {
   findById(id: string): Promise<Contact | null>
   searchMany(query: string, page: number): Promise<Contact[]>
   findByName(name: string): Promise<Contact | null>
-  findMany(): Promise<Contact[]>
+  findMany(query?: string, page?: number): Promise<Contact[]>
 }

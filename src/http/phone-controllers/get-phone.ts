@@ -5,16 +5,16 @@ import { z } from 'zod'
 
 export async function getPhone(request: FastifyRequest, reply: FastifyReply) {
   const deletePhoneBodySchema = z.object({
-    id: z.string(),
+    contact_Id: z.string(),
   })
 
-  const { id } = deletePhoneBodySchema.parse(request.params)
+  const { contact_Id } = deletePhoneBodySchema.parse(request.params)
 
   try {
     const getPhoneUseCase = makeGetPhoneUseCase()
 
     const { phone } = await getPhoneUseCase.execute({
-      id
+      contact_Id
     })
     return reply.status(201).send({phone})
     

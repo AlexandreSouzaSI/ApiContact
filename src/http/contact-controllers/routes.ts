@@ -9,9 +9,8 @@ import { getAllContact } from './get-all-contact'
 export async function contactRoutes(app: FastifyInstance) {
   app.post('/contact', createContact)
   app.get('/contact', getAllContact)
-  app.delete('/contact/:userId', deleteContact)
+  app.delete('/contact/:id', deleteContact)
   app.get('/contact/:userId', getContact)
-  app.get('/contact/search', searchContact)
   app.put('/contact/update/:id', updateContact)
 
 }

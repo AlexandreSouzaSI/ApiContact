@@ -9,8 +9,8 @@ export async function createPhone(request: FastifyRequest, reply: FastifyReply) 
     number: z.string(),
   })
 
-  // const { contact_Id } = createPhoneBodySchema.parse(request.params)
   const { number, contact_Id } = createPhoneBodySchema.parse(request.body)
+
 
   try {
     const createPhoneUseCase = makeRegisterPhoneUseCase()

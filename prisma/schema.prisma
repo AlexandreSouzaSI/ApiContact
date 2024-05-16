@@ -25,8 +25,8 @@ model Contact {
 }
 
 model Phone {
-  id     String @id @default(uuid())
-  number String
+  id     String  @id @default(uuid())
+  number String?
 
   contact    Contact @relation(fields: [contact_Id], references: [id])
   contact_Id String

@@ -5,16 +5,17 @@ import { z } from 'zod'
 
 export async function deleteContact(request: FastifyRequest, reply: FastifyReply) {
   const deleteContactBodySchema = z.object({
-    userId: z.string(),
+    id: z.string(),
   })
 
-  const { userId } = deleteContactBodySchema.parse(request.params)
+  const { id } = deleteContactBodySchema.parse(request.params)
 
+  
   try {
     const deleteContactUseCase = makeDeleteContactUseCase()
-
+    
     await deleteContactUseCase.execute({
-      userId
+      id
     })
   } catch (error) {
     if (error instanceof UserAlreadyExistsError) {
