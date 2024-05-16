@@ -6,16 +6,14 @@ import { z } from 'zod'
 export async function searchContact(request: FastifyRequest, reply: FastifyReply) {
   const searchContactBodySchema = z.object({
     query: z.string(),
-    page: z.coerce.number().min(1).default(1),
   })
 
-  const { query, page } = searchContactBodySchema.parse(request.query)
+  const { query } = searchContactBodySchema.parse(request.query)
 
     const searchContactUseCase = makeSearchContactUseCase()
 
     const { contact } = await searchContactUseCase.execute({
       query,
-      page
     })
 
     return reply.status(200).send({contact})

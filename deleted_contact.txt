@@ -1,9 +1,9 @@
 
         Contato Deletado:
-        ID: 13bbfd70-af6e-4aa7-a3a6-8ea6c14974e7
-        Nome: UHAUha
-        Idade: UHYGAYG
-        Telefones: yagygA, , 
+        ID: 974d66d7-88ee-4f6f-8450-4e9f938f1274
+        Nome: 3
+        Idade: 
+        Telefones: , , 
         Data de Validação: N/A
-        Data de Criação: Wed May 15 2024 23:34:53 GMT-0300 (Horário Padrão de Brasília)
+        Data de Criação: Thu May 16 2024 15:23:35 GMT-0300 (Horário Padrão de Brasília)
       

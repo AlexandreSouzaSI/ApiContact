@@ -25,7 +25,6 @@ describe('Search phone Use Case', () => {
 
     const { phone } = await sut.execute({
       query: '000000400',
-      page: 1
     })
 
     expect(phone).toEqual([expect.objectContaining({ number: '000000400' })])

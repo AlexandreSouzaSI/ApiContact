@@ -67,15 +67,13 @@ export class PrismaPhoneRepository implements PhoneRepository {
     return phone
   }
 
-  async searchMany(query: string, page: number) {
+  async searchMany(query: string) {
     const phone = await prisma.phone.findMany({
       where: {
         number: {
           contains: query,
         },
       },
-      take: 10,
-      skip: (page - 1) * 10,
     })
     return phone
   }

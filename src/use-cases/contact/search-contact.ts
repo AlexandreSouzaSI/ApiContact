@@ -3,7 +3,6 @@ import { ContactRepository } from '@/repositories/contact-repository'
 
 interface SearchContactUseCaseRequest {
   query: string
-  page: number
 }
 
 interface SearchContactResponse {
@@ -15,9 +14,8 @@ export class SearchContactUseCase {
 
   async execute({
     query,
-    page
   }: SearchContactUseCaseRequest): Promise<SearchContactResponse> {
-    const contact = await this.contactRepository.searchMany(query, page)
+    const contact = await this.contactRepository.searchMany(query)
 
     return {
       contact

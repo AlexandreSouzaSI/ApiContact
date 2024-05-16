@@ -5,7 +5,7 @@ export interface ContactRepository {
   delete(id: string): Promise<Contact | null>
   save(data: Prisma.ContactUpdateInput): Promise<Contact>
   findById(id: string): Promise<Contact | null>
-  searchMany(query: string, page: number): Promise<Contact[]>
+  searchMany(query: string): Promise<Contact[]>
   findByName(name: string): Promise<Contact | null>
-  findMany(query?: string, page?: number): Promise<Contact[]>
+  findMany(query?: string): Promise<Contact[]>
 }

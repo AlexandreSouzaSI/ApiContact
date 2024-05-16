@@ -17,7 +17,6 @@ export class PrismaContactRepository implements ContactRepository {
         throw new Error(`Contato com ID ${id} não encontrado.`);
       }
 
-      
       const contactInfo = `
         Contato Deletado:
         ID: ${contact.id}
@@ -61,7 +60,7 @@ export class PrismaContactRepository implements ContactRepository {
     return contact
   }
 
-  async searchMany(query: string, page: number) {
+  async searchMany(query: string) {
     const contact = await prisma.contact.findMany({
       where: {
         validated_at: null,
@@ -69,14 +68,12 @@ export class PrismaContactRepository implements ContactRepository {
           contains: query,
         },
       },
-      take: 10,
-      skip: (page - 1) * 10,
       include: { phone: true }
     })
     return contact
   }
 
-  async findMany(query?: string, page?: string) {
+  async findMany(query?: string) {
     const contact = await prisma.contact.findMany({
       where: {
         validated_at: null,
@@ -97,8 +94,6 @@ export class PrismaContactRepository implements ContactRepository {
           },
         ],
       },
-      take: 10, // Limite de resultados por página
-      skip: page ? (parseInt(page) - 1) * 10 : 0, // Pular resultados se a página não for a primeira
       include: {
         phone: true, // Inclui os números de telefone associados aos contatos
       },

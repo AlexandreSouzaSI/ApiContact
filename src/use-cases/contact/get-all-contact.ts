@@ -3,7 +3,6 @@ import { Contact } from '@prisma/client'
 
 interface SearchContactUseCaseRequest {
   query?: string
-  page?: number
 }
 
 interface SearchContactResponse {
@@ -16,10 +15,9 @@ export class GetAllContactUseCase {
 
   async execute({
     query,
-    page
   }: SearchContactUseCaseRequest): Promise<SearchContactResponse> {
 
-    const contact = await this.contactRepository.findMany(query, page)
+    const contact = await this.contactRepository.findMany(query)
 
     return {
       contact,

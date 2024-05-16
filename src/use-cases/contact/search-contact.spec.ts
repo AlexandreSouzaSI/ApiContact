@@ -24,7 +24,6 @@ describe('Search contact Use Case', () => {
 
     const { contact } = await sut.execute({
       query: 'Alexandre',
-      page: 1,
     })
 
     expect(contact).toHaveLength(1)
@@ -41,7 +40,6 @@ describe('Search contact Use Case', () => {
 
     const { contact } = await sut.execute({
       query: 'Souza',
-      page: 2,
     })
 
     expect(contact).toEqual([

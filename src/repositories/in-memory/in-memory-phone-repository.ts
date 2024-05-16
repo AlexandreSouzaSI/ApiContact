@@ -18,10 +18,9 @@ export class InMemoryPhoneRepository implements PhoneRepository {
     return phone
   }
 
-  async searchMany(query: string, page: number) {
+  async searchMany(query: string) {
     return this.items
       .filter((item) => item.number.includes(query))
-      .slice((page - 1) * 10, page * 10)
   }
 
   async findById(id: string) {

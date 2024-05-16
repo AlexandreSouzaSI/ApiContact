@@ -3,7 +3,6 @@ import { PhoneRepository } from '@/repositories/phone-repository'
 
 interface SearchPhoneUseCaseRequest {
   query: string
-  page: number
 }
 
 interface SearchPhoneResponse {
@@ -15,9 +14,8 @@ export class SearchPhoneUseCase {
 
   async execute({
     query,
-    page
   }: SearchPhoneUseCaseRequest): Promise<SearchPhoneResponse> {
-    const phone = await this.phoneRepository.searchMany(query, page)
+    const phone = await this.phoneRepository.searchMany(query)
 
     return {
       phone

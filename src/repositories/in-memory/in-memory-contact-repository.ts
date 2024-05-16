@@ -15,8 +15,8 @@ export class InMemoryContactRepository implements ContactRepository {
     return data
   }
 
-  async searchMany(query: string, page: number) {
-    return this.items.filter((item) => item.name.includes(query)).filter((item) => item.validated_at === null).slice((page -1) * 10, page * 10)
+  async searchMany(query: string) {
+    return this.items.filter((item) => item.name.includes(query)).filter((item) => item.validated_at === null)
   }
 
   async findById(id: string) {
